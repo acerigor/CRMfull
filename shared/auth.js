@@ -132,6 +132,12 @@
     }
   });
 
+  // Auto-redirect to login if no token (skip on login page itself)
+  if(!getToken() && window.location.pathname.indexOf('/login') === -1){
+    window.location.href = '/login/login.html?redirect=' + encodeURIComponent(window.location.pathname + window.location.search);
+    return;
+  }
+
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', syncAccountBadge);
   } else {

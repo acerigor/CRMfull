@@ -6,7 +6,7 @@
     { "source": "/api/(.*)", "destination": "/api/index.js" }
   ],
   "redirects": [
-    { "source": "/", "destination": "/coreconnect_dashboard_v41/coreconnect_dashboard_v41.html" }
+    { "source": "/", "destination": "/login/login.html" }
   ],
   "headers": [
     {

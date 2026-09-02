@@ -22,7 +22,7 @@ app.use('/api/', rateLimit({ windowMs: 15 * 60 * 1000, max: 200 }));
 // --------------- Root redirect ---------------
 if (!process.env.VERCEL) {
   app.get('/', (req, res) => {
-    res.redirect('/coreconnect_dashboard_v41/coreconnect_dashboard_v41.html');
+    res.redirect('/login/login.html');
   });
 }
 
