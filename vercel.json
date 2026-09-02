@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "buildCommand": "npx prisma generate",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" }
+  ],
+  "redirects": [
+    { "source": "/", "destination": "/coreconnect_dashboard_v41/coreconnect_dashboard_v41.html" }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ]
+}
