@@ -3769,8 +3769,9 @@ function apptSetView(v){
   renderActive();   // keep context: re-render newly active view from the same focus date
 }
 /* ---- Calendar state: single source of truth ---- */
-var APPT_TODAY = {y:2026, m:6, d:5};   // Fri Jun 5 2026 = "today"
-var apptFocus = new Date(2026, 5, 5);  // currently focused date (drives all views)
+var _now = new Date();
+var APPT_TODAY = {y:_now.getFullYear(), m:_now.getMonth()+1, d:_now.getDate()};
+var apptFocus = new Date(_now.getFullYear(), _now.getMonth(), _now.getDate());
 var apptView = 'month';                // active view: month | week | day
 var _calSelDay = null;                 // mobile month view: {y,m,d} selected day for the day-list
 var MONTH_NAMES = ['January','February','March','April','May','June','July',
