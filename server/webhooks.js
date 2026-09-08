@@ -1,7 +1,9 @@
-const ZAPIER_URL = process.env.ZAPIER_WEBHOOK_URL;
-
 function fireWebhook(event, activity) {
-  if (!ZAPIER_URL) return;
+  const url = process.env.ZAPIER_WEBHOOK_URL;
+  if (!url) {
+    console.log('[webhook] ZAPIER_WEBHOOK_URL not set, skipping');
+    return;
+  }
 
   const payload = {
     event,
@@ -16,11 +18,15 @@ function fireWebhook(event, activity) {
     createdAt: activity.createdAt,
   };
 
-  fetch(ZAPIER_URL, {
+  console.log('[webhook] Firing:', event, payload.title);
+
+  fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
-  }).catch(() => {});
+  })
+    .then(r => console.log('[webhook] Response:', r.status))
+    .catch(err => console.error('[webhook] Error:', err.message));
 }
 
 module.exports = { fireWebhook };
