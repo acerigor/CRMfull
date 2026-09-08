@@ -1,5 +1,5 @@
 function fireWebhook(event, activity) {
-  const url = process.env.ZAPIER_WEBHOOK_URL;
+  const url = (process.env.ZAPIER_WEBHOOK_URL || '').trim();
   if (!url) {
     console.log('[webhook] ZAPIER_WEBHOOK_URL not set, skipping');
     return;
@@ -19,14 +19,15 @@ function fireWebhook(event, activity) {
   };
 
   console.log('[webhook] Firing:', event, payload.title);
+  console.log('[webhook] URL starts with:', url.substring(0, 40) + '...');
 
   fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   })
-    .then(r => console.log('[webhook] Response:', r.status))
-    .catch(err => console.error('[webhook] Error:', err.message));
+    .then(r => console.log('[webhook] Response:', r.status, r.statusText))
+    .catch(err => console.error('[webhook] Error:', err.message, err.cause || ''));
 }
 
 module.exports = { fireWebhook };

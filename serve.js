@@ -9,6 +9,8 @@ const { authMiddleware } = require('./server/middleware/auth');
 const app = express();
 const PORT = process.env.PORT || 8123;
 
+if (process.env.VERCEL) app.set('trust proxy', 1);
+
 // --------------- Middleware ---------------
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(compression());
