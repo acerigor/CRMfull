@@ -4,6 +4,8 @@ const TYPE_LABELS = {
   task: '✅ Task',
 };
 
+const TZ_OFFSET = (process.env.TIMEZONE_OFFSET || '+08:00').trim();
+
 function formatDateTime(date, time) {
   if (!date) return '';
   const parts = date.split('-');
@@ -13,7 +15,7 @@ function formatDateTime(date, time) {
   if (!time) return `${y}-${m}-${d}`;
   const h = time.split(':')[0].padStart(2, '0');
   const min = (time.split(':')[1] || '00').padStart(2, '0');
-  return `${y}-${m}-${d}T${h}:${min}:00`;
+  return `${y}-${m}-${d}T${h}:${min}:00${TZ_OFFSET}`;
 }
 
 function addOneHour(date, time) {
