@@ -1,5 +1,6 @@
 const express = require('express');
 const prisma = require('../db');
+const { fireWebhook } = require('../webhooks');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -19,6 +20,7 @@ router.get('/lead/:leadId', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const activity = await prisma.activity.create({ data: req.body });
+  fireWebhook('activity.created', activity);
   res.status(201).json(activity);
 });
 
@@ -27,11 +29,13 @@ router.put('/:id', async (req, res) => {
     where: { id: parseInt(req.params.id) },
     data: req.body,
   });
+  fireWebhook('activity.updated', activity);
   res.json(activity);
 });
 
 router.delete('/:id', async (req, res) => {
-  await prisma.activity.delete({ where: { id: parseInt(req.params.id) } });
+  const activity = await prisma.activity.delete({ where: { id: parseInt(req.params.id) } });
+  fireWebhook('activity.deleted', activity);
   res.json({ ok: true });
 });
 
