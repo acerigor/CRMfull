@@ -4,6 +4,16 @@
    <script src="../shared/leads-comms.js"></script> so their numbers always agree.
    Plain classic script — attaches everything to window.CCLeads.
    ============================================================================ */
+
+// Auto-load auth.js if not already present
+if (!window.CCAuth) {
+  var _s = document.currentScript || document.querySelector('script[src*="leads-comms"]');
+  if (_s) {
+    var _base = _s.src.substring(0, _s.src.lastIndexOf('/') + 1);
+    document.write('<script src="' + _base + 'auth.js"><\/script>');
+  }
+}
+
 (function (global) {
   function _authH() {
     if (window.CCAuth && CCAuth.authHeaders) return CCAuth.authHeaders();
